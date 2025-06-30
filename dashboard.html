@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - StockMate</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <div class="container">
+        <div class="header-content">
+          <a href="index.html" class="logo">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M7 14l3-3 3 3 5-5v4h2V7h-6v2l3 3-3 3-3-3-3 3v2z" />
+            </svg>
+            StockMate
+          </a>
+          <nav class="nav">
+            <a href="index.html">Home</a>
+            <a href="dashboard.html" class="active">Dashboard</a>
+            <a href="stocks.html">Stocks</a>
+            <a href="news.html">News</a>
+            <a href="#">Portfolio</a>
+            <a href="#">Learn</a>
+          </nav>
+          <div class="search-bar">
+            <div class="search-icon">🔍</div>
+            <input
+              type="search"
+              placeholder="Search stocks..."
+              class="search-input"
+            />
+          </div>
+          <div class="currency-selector">
+            <label for="currency-select">Currency:</label>
+            <select id="currency-select">
+              <option value="USD">USD $</option>
+              <option value="EUR">EUR €</option>
+              <option value="RUB">RUB ₽</option>
+              <option value="JPY">JPY ¥</option>
+            </select>
+          </div>
+          <div class="header-actions">
+            <button class="icon-btn">🔔</button>
+            <button
+              class="icon-btn"
+              onclick="window.location.href='login.html'"
+            >
+              👤
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Dashboard Content -->
+    <main class="dashboard">
+      <div class="container">
+        <div class="dashboard-header">
+          <h1 class="dashboard-title">Your Dashboard</h1>
+          <p class="dashboard-description">
+            Track your portfolio performance and market trends
+          </p>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-header">
+              <span class="stat-title">Portfolio Value</span>
+              <div class="stat-icon">📈</div>
+            </div>
+            <div class="stat-value" data-usd="45231.89">$45,231.89</div>
+            <div class="stat-change">+20.1% from last month</div>
+            <div class="stat-trend trend-positive">↗ 4.3% vs last week</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-header">
+              <span class="stat-title">Today's Gain/Loss</span>
+              <div class="stat-icon">📊</div>
+            </div>
+            <div class="stat-value" data-usd="892.40">+$892.40</div>
+            <div class="stat-change">+1.9% today</div>
+            <div class="stat-trend trend-positive">↗ 1.9% vs yesterday</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-header">
+              <span class="stat-title">Top Performer</span>
+              <div class="stat-icon">🥇</div>
+            </div>
+            <div class="stat-perform">AAPL</div>
+            <div class="stat-change">Apple Inc.</div>
+            <div class="stat-trend trend-positive">↗ 3.5% today</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-header">
+              <span class="stat-title">Worst Performer</span>
+              <div class="stat-icon">📉</div>
+            </div>
+            <div class="stat-perform">META</div>
+            <div class="stat-change">Meta Platforms Inc.</div>
+            <div class="stat-trend trend-negative">↘ 2.1% today</div>
+          </div>
+        </div>
+
+        <!-- Chart Section -->
+        <div class="chart-section">
+          <div class="chart-card">
+            <div class="chart-header">
+              <h3 class="chart-title">Portfolio Performance</h3>
+              <p class="chart-description">
+                Track your portfolio's performance over time
+              </p>
+            </div>
+            <div class="chart-placeholder">
+              <!-- <div id="chart-container"> -->
+              <canvas id="portfolioChart"></canvas>
+              <!-- </div> -->
+            </div>
+            <script>
+              const ctx = document
+                .getElementById("portfolioChart")
+                .getContext("2d");
+
+              const portfolioChart = new Chart(ctx, {
+                type: "line",
+                data: {
+                  labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+                  datasets: [
+                    {
+                      label: "Portfolio Value ($)",
+                      data: [10000, 10500, 9900, 12000, 12500, 13500],
+                      borderColor: "#4db2ec",
+                      backgroundColor: "rgba(77, 178, 236, 0.1)",
+                      tension: 0.4,
+                      fill: true,
+                      pointRadius: 4,
+                      pointHoverRadius: 6,
+                    },
+                  ],
+                },
+                options: {
+                  responsive: true,
+                  plugins: {
+                    legend: { display: false },
+                    tooltip: { mode: "index", intersect: false },
+                  },
+                  scales: {
+                    y: {
+                      beginAtZero: false,
+                    },
+                  },
+                },
+              });
+            </script>
+          </div>
+
+          <div class="chart-card">
+            <div class="watchlist-header">
+              <h3 class="chart-title">Your Watchlist</h3>
+              <div class="watchlist-actions">
+                <button class="icon-btn">➕</button>
+                <button class="icon-btn">⚙️</button>
+              </div>
+            </div>
+            <table class="watchlist-table">
+              <thead>
+                <tr>
+                  <th>Symbol</th>
+                  <th>Price</th>
+                  <th>Change</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <div class="stock-name">AAPL</div>
+                    <div class="stock-symbol">Apple Inc.</div>
+                  </td>
+                  <td class="stock-price" data-usd="180.95">$180.95</td>
+                  <td class="stock-change change-positive">+1.83%</td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="stock-name">MSFT</div>
+                    <div class="stock-symbol">Microsoft Corp.</div>
+                  </td>
+                  <td class="stock-price" data-usd="337.22">$337.22</td>
+                  <td class="stock-change change-positive">+0.67%</td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="stock-name">GOOGL</div>
+                    <div class="stock-symbol">Alphabet Inc.</div>
+                  </td>
+                  <td class="stock-price" data-usd="131.86">$131.86</td>
+                  <td class="stock-change change-positive">+0.52%</td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="stock-name">AMZN</div>
+                    <div class="stock-symbol">Amazon.com Inc.</div>
+                  </td>
+                  <td class="stock-price" data-usd="127.74">$127.74</td>
+                  <td class="stock-change change-negative">-0.5%</td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="stock-name">TSLA</div>
+                    <div class="stock-symbol">Tesla Inc.</div>
+                  </td>
+                  <td class="stock-price" data-usd="237.49">$237.49</td>
+                  <td class="stock-change change-positive">+0.84%</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="chart-card">
+          <div class="chart-header">
+            <h3 class="chart-title">Recent Activity</h3>
+            <p class="chart-description">Your recent transactions and alerts</p>
+          </div>
+          <ul class="activity-list">
+            <li class="activity-item">
+              <div class="activity-icon">💰</div>
+              <div class="activity-content">
+                <div class="activity-title">
+                  Purchased 5 shares of AAPL at $180.95
+                </div>
+                <div class="activity-time">Today, 10:23 AM</div>
+              </div>
+            </li>
+            <li class="activity-item">
+              <div class="activity-icon">🔔</div>
+              <div class="activity-content">
+                <div class="activity-title">
+                  Price Alert: TSLA reached your target price of $235.00
+                </div>
+                <div class="activity-time">Today, 9:45 AM</div>
+              </div>
+            </li>
+            <li class="activity-item">
+              <div class="activity-icon">📰</div>
+              <div class="activity-content">
+                <div class="activity-title">
+                  News Alert: Quarterly earnings report for MSFT released
+                </div>
+                <div class="activity-time">Yesterday, 4:30 PM</div>
+              </div>
+            </li>
+            <li class="activity-item">
+              <div class="activity-icon">💰</div>
+              <div class="activity-content">
+                <div class="activity-title">
+                  Sold 10 shares of META at $318.50
+                </div>
+                <div class="activity-time">Yesterday, 2:15 PM</div>
+              </div>
+            </li>
+            <li class="activity-item">
+              <div class="activity-icon">📊</div>
+              <div class="activity-content">
+                <div class="activity-title">
+                  Portfolio rebalanced: Adjusted allocation in Tech sector
+                </div>
+                <div class="activity-time">Oct 15, 2023</div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <div class="footer-logo">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path d="M7 14l3-3 3 3 5-5v4h2V7h-6v2l3 3-3 3-3-3-3 3v2z" />
+              </svg>
+              StockMate
+            </div>
+            <p class="footer-description">
+              Your personal stock market assistant for smarter investing.
+            </p>
+            <div class="footer-social">
+              <a href="#">📱</a>
+              <a href="#">💬</a>
+              <a href="#">📸</a>
+              <a href="#">🐦</a>
+            </div>
+          </div>
+          <div>
+            <h3 class="footer-heading">Product</h3>
+            <ul class="footer-links">
+              <li><a href="#">Features</a></li>
+              <li><a href="#">Pricing</a></li>
+              <li><a href="#">API</a></li>
+              <li><a href="#">Integrations</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="footer-heading">Resources</h3>
+            <ul class="footer-links">
+              <li><a href="#">Documentation</a></li>
+              <li><a href="#">Guides</a></li>
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">Support</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="footer-heading">Company</h3>
+            <ul class="footer-links">
+              <li><a href="#">About</a></li>
+              <li><a href="#">Careers</a></li>
+              <li><a href="#">Contact</a></li>
+              <li><a href="#">Press</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2023 StockMate. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+    <script src="currency.js"></script>
+    <script src="currency-loader.js"></script>
+  </body>
+</html>

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stock Details</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #f7f9fc;
+        margin: 0;
+        padding: 20px;
+        color: #333;
+      }
+
+      .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 10px;
+        padding: 30px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      }
+
+      .stock-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .stock-title {
+        font-size: 28px;
+        margin-bottom: 5px;
+      }
+
+      .stock-subtitle {
+        color: #777;
+      }
+
+      .stock-actions {
+        display: flex;
+        gap: 10px;
+      }
+
+      .stock-btn {
+        padding: 10px 18px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
+      }
+
+      .stock-btn.primary {
+        background-color: #2d8cff;
+        color: white;
+      }
+
+      .stock-btn.secondary {
+        background-color: #f0f0f0;
+        color: #333;
+      }
+
+      .stock-info {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        margin: 20px 0;
+      }
+
+      .info-box {
+        flex: 1 1 180px;
+        background: #f9f9f9;
+        padding: 15px;
+        border-radius: 8px;
+        text-align: center;
+      }
+
+      .info-box .label {
+        font-size: 14px;
+        color: #666;
+      }
+
+      .info-box .value {
+        font-size: 20px;
+        margin-top: 5px;
+      }
+
+      .stock-description {
+        margin-top: 30px;
+        line-height: 1.6;
+      }
+
+      canvas {
+        margin-top: 30px;
+        max-width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="stock-header">
+        <div>
+          <div class="stock-title" id="stock-name">Loading...</div>
+          <div class="stock-subtitle" id="stock-symbol"></div>
+        </div>
+        <div class="stock-actions">
+          <button class="stock-btn primary">Buy</button>
+          <button class="stock-btn secondary">Add to Watchlist</button>
+          <button class="stock-btn secondary">Share</button>
+        </div>
+      </div>
+
+      <div class="stock-info">
+        <div class="info-box">
+          <div class="label">Current Price</div>
+          <div class="value" id="stock-price">$–</div>
+        </div>
+        <div class="info-box">
+          <div class="label">Change (%)</div>
+          <div class="value" id="stock-change">–%</div>
+        </div>
+        <div class="info-box">
+          <div class="label">Market Cap</div>
+          <div class="value" id="stock-marketcap">–</div>
+        </div>
+        <div class="info-box">
+          <div class="label">Sector</div>
+          <div class="value" id="stock-sector">–</div>
+        </div>
+      </div>
+
+      <canvas id="stockChart" height="300"></canvas>
+
+      <div class="stock-description">
+        <h3>About the Company</h3>
+        <p id="stock-description">
+          This is a placeholder description for the company. You can fetch real
+          company profiles using external APIs like [Financial Modeling
+          Prep](https://financialmodelingprep.com), Yahoo Finance, or add static
+          text manually.
+        </p>
+      </div>
+    </div>
+
+    <script>
+      const urlParams = new URLSearchParams(window.location.search);
+      const symbol = urlParams.get("symbol") || "AAPL";
+      const accessKey = "e0a5b55490d2d0d42de5439a9c6c3aa5"; // ← Вставь свой ключ
+
+      // Названия компаний — можно расширить список
+      const companyData = {
+        AAPL: {
+          name: "Apple Inc.",
+          sector: "Technology",
+          marketCap: 2850000000000,
+          description:
+            "Apple Inc. designs, manufactures, and markets smartphones, personal computers, tablets, wearables, and accessories worldwide.",
+        },
+        MSFT: {
+          name: "Microsoft Corporation",
+          sector: "Technology",
+          marketCap: 2510000000000,
+          description:
+            "Microsoft Corporation develops, licenses, and supports software, services, devices, and solutions worldwide.",
+        },
+        // Добавь других по мере необходимости
+      };
+
+      const company = companyData[symbol] || {
+        name: symbol,
+        sector: "Unknown",
+        marketCap: 0,
+        description: "No description available for this company.",
+      };
+
+      document.getElementById("stock-name").textContent = company.name;
+      document.getElementById("stock-symbol").textContent = symbol;
+      document.getElementById("stock-sector").textContent = company.sector;
+      document.getElementById("stock-marketcap").textContent =
+        company.marketCap > 1e12
+          ? `$${(company.marketCap / 1e12).toFixed(2)}T`
+          : `$${(company.marketCap / 1e9).toFixed(2)}B`;
+      document.getElementById("stock-description").textContent =
+        company.description;
+
+      async function fetchChartData() {
+        try {
+          const res = await fetch(
+            `http://api.marketstack.com/v1/eod?access_key=${accessKey}&symbols=${symbol}&limit=30`
+          );
+          const data = await res.json();
+
+          const prices = data.data.reverse();
+          const labels = prices.map((p) => p.date.slice(0, 10));
+          const closePrices = prices.map((p) => p.close);
+
+          document.getElementById("stock-price").textContent = `$${closePrices[
+            closePrices.length - 1
+          ].toFixed(2)}`;
+
+          const change =
+            ((closePrices[closePrices.length - 1] - closePrices[0]) /
+              closePrices[0]) *
+            100;
+          document.getElementById("stock-change").textContent = `${
+            change >= 0 ? "+" : ""
+          }${change.toFixed(2)}%`;
+
+          drawChart(labels, closePrices);
+        } catch (err) {
+          console.error("Ошибка загрузки данных:", err);
+        }
+      }
+
+      function drawChart(labels, data) {
+        const ctx = document.getElementById("stockChart").getContext("2d");
+        new Chart(ctx, {
+          type: "line",
+          data: {
+            labels,
+            datasets: [
+              {
+                label: `${symbol} Price`,
+                data,
+                borderColor: "#2d8cff",
+                backgroundColor: "rgba(45, 140, 255, 0.1)",
+                fill: true,
+                tension: 0.3,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            scales: {
+              y: { beginAtZero: false },
+            },
+          },
+        });
+      }
+
+      fetchChartData();
+    </script>
+  </body>
+</html>

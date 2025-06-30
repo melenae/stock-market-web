@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stocks - StockMate</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <div class="container">
+        <div class="header-content">
+          <a href="index.html" class="logo">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M7 14l3-3 3 3 5-5v4h2V7h-6v2l3 3-3 3-3-3-3 3v2z" />
+            </svg>
+            StockMate
+          </a>
+          <nav class="nav">
+            <a href="index.html">Home</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="stocks.html" class="active">Stocks</a>
+            <a href="news.html">News</a>
+            <a href="#">Portfolio</a>
+            <a href="#">Learn</a>
+          </nav>
+          <div class="search-bar">
+            <div class="search-icon">🔍</div>
+            <input
+              type="search"
+              placeholder="Search stocks..."
+              class="search-input"
+            />
+          </div>
+          <div class="currency-selector">
+            <label for="currency-select">Currency:</label>
+            <select id="currency-select">
+              <option value="USD">USD $</option>
+              <option value="EUR">EUR €</option>
+              <option value="RUB">RUB ₽</option>
+              <option value="JPY">JPY ¥</option>
+            </select>
+          </div>
+          <div class="header-actions">
+            <button class="icon-btn">🔔</button>
+            <button
+              class="icon-btn"
+              onclick="window.location.href='login.html'"
+            >
+              👤
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Stocks Content -->
+    <main class="stocks">
+      <div class="container">
+        <div class="stocks-header">
+          <h1 class="stocks-title">Stocks</h1>
+          <p class="stocks-description">
+            Explore and analyze stocks from various markets
+          </p>
+        </div>
+
+        <!-- Market Overview -->
+        <div class="market-overview">
+          <div class="market-card">
+            <div class="market-name">S&P 500</div>
+            <div class="market-value" data-usd="4783.45">$4,783.45</div>
+            <div class="market-change change-positive">↗ +23.14 (+0.49%)</div>
+          </div>
+
+          <div class="market-card">
+            <div class="market-name">Dow Jones</div>
+            <div class="market-value" data-usd="37248.35">$37,248.35</div>
+            <div class="market-change change-positive">↗ +183.85 (+0.50%)</div>
+          </div>
+
+          <div class="market-card">
+            <div class="market-name">NASDAQ</div>
+            <div class="market-value" data-usd="15055.65">$15,055.65</div>
+            <div class="market-change change-positive">↗ +100.68 (+0.67%)</div>
+          </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters">
+          <div class="filter-group">
+            <label class="filter-label">Market:</label>
+            <select id="market-filter" class="filter-select">
+              <option value="all">All Markets</option>
+              <option value="US">US</option>
+              <option value="Europe">Europe</option>
+              <option value="Asia">Asia</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label class="filter-label">Sector:</label>
+            <select id="sector-filter" class="filter-select">
+              <option value="all">All Sectors</option>
+              <option value="Technology">Technology</option>
+              <option value="Healthcare">Healthcare</option>
+              <option value="Finance">Finance</option>
+              <option value="Energy">Energy</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label class="filter-label">Sort by:</label>
+            <select id="sort-filter" class="filter-select">
+              <option value="market-cap">Market Cap</option>
+              <option value="price">Price</option>
+              <option value="Change">Change %</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Trending Stocks -->
+        <div class="stocks-card">
+          <div class="stocks-table-header">
+            <h3 class="stocks-table-title">Trending Stocks</h3>
+            <div class="stocks-table-actions">
+              <button class="icon-btn">⚙️</button>
+              <button class="icon-btn">↓</button>
+            </div>
+          </div>
+          <table class="stocks-table">
+            <thead>
+              <tr>
+                <th>Symbol</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Change</th>
+                <th>% Change</th>
+                <th>Market Cap</th>
+                <th>Chart</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="stock-tbody">
+              <tr>
+                <td>AAPL</td>
+                <td>
+                  <div class="stock-name">Apple Inc.</div>
+                  <div class="stock-symbol">Technology</div>
+                </td>
+                <td class="stock-price" data-usd="180.95">$180.95</td>
+                <td class="stock-change change-positive">+3.25</td>
+                <td class="stock-change change-positive">+1.83%</td>
+                <td class="stock-price" data-usd="2850000000000">$2.85T</td>
+                <td>
+                  <div class="stock-chart"></div>
+                </td>
+                <td>
+                  <div class="stock-actions">
+                    <button class="stock-btn" onclick="goToStock('AAPL')">
+                      Watch
+                    </button>
+                    <button
+                      class="stock-btn stock-btn-primary"
+                      onclick="addToPortfolio('AAPL')"
+                    >
+                      Buy
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>MSFT</td>
+                <td>
+                  <div class="stock-name">Microsoft Corporation</div>
+                  <div class="stock-symbol">Technology</div>
+                </td>
+                <td class="stock-price" data-usd="337.22">$337.22</td>
+                <td class="stock-change change-positive">+2.25</td>
+                <td class="stock-change change-positive">+0.67%</td>
+                <td class="stock-price" data-usd="2510000000000">$2.51T</td>
+                <td>
+                  <div class="stock-chart"></div>
+                </td>
+                <td>
+                  <div class="stock-actions">
+                    <button class="stock-btn" onclick="goToStock('AAPL')">
+                      Watch
+                    </button>
+                    <button class="stock-btn stock-btn-primary">Buy</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>GOOGL</td>
+                <td>
+                  <div class="stock-name">Alphabet Inc.</div>
+                  <div class="stock-symbol">Technology</div>
+                </td>
+                <td class="stock-price" data-usd="131.86">$131.86</td>
+                <td class="stock-change change-positive">+0.68</td>
+                <td class="stock-change change-positive">+0.52%</td>
+                <td class="stock-price" data-usd="1670000000000">$1.67T</td>
+                <td>
+                  <div class="stock-chart"></div>
+                </td>
+                <td>
+                  <div class="stock-actions">
+                    <button class="stock-btn watch-btn" data-symbol="GOOGL">
+                      Watch
+                    </button>
+                    <button class="stock-btn stock-btn-primary">Buy</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>AMZN</td>
+                <td>
+                  <div class="stock-name">Amazon.com Inc.</div>
+                  <div class="stock-symbol">Consumer Cyclical</div>
+                </td>
+                <td class="stock-price" data-usd="127.74">$127.74</td>
+                <td class="stock-change change-negative">-0.64</td>
+                <td class="stock-change change-negative">-0.5%</td>
+                <td class="stock-price" data-usd="1310000000000">$1.31T</td>
+                <td>
+                  <div class="stock-chart"></div>
+                </td>
+                <td>
+                  <div class="stock-actions">
+                    <button class="stock-btn watch-btn" data-symbol="AMZN">
+                      Watch
+                    </button>
+                    <button class="stock-btn stock-btn-primary">Buy</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>TSLA</td>
+                <td>
+                  <div class="stock-name">Tesla Inc.</div>
+                  <div class="stock-symbol">Automotive</div>
+                </td>
+                <td class="stock-price" data-usd="237.49">$237.49</td>
+                <td class="stock-change change-positive">+1.98</td>
+                <td class="stock-change change-positive">+0.84%</td>
+                <td class="stock-price" data-usd="7534000000000">$753.4B</td>
+                <td>
+                  <div class="stock-chart"></div>
+                </td>
+                <td>
+                  <div class="stock-actions">
+                    <button class="stock-btn" data-symbol="TSLA">Watch</button>
+                    <button class="stock-btn stock-btn-primary">Buy</button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="pagination" id="pagination">
+            <button class="pagination-btn" data-page="prev">←</button>
+            <button class="pagination-btn active" data-page="1">1</button>
+            <button class="pagination-btn" data-page="2">2</button>
+            <button class="pagination-btn" data-page="3">3</button>
+            <button class="pagination-btn" data-page="4">4</button>
+            <button class="pagination-btn" data-page="5">5</button>
+            <button class="pagination-btn" data-page="next">→</button>
+          </div>
+        </div>
+
+        <!-- Sectors -->
+        <div class="stocks-header">
+          <h2 class="stocks-title">Sectors Performance</h2>
+          <p class="stocks-description">
+            Performance of different market sectors
+          </p>
+        </div>
+
+        <div class="sectors-grid">
+          <div class="sector-card">
+            <div class="sector-header">
+              <div class="sector-name">Technology</div>
+              <div class="sector-change change-positive">+1.2%</div>
+            </div>
+            <ul class="sector-stocks">
+              <li class="sector-stock">
+                <span>AAPL</span>
+                <span class="change-positive">+1.83%</span>
+              </li>
+              <li class="sector-stock">
+                <span>MSFT</span>
+                <span class="change-positive">+0.67%</span>
+              </li>
+              <li class="sector-stock">
+                <span>GOOGL</span>
+                <span class="change-positive">+0.52%</span>
+              </li>
+              <li class="sector-stock">
+                <span>NVDA</span>
+                <span class="change-positive">+2.1%</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="sector-card">
+            <div class="sector-header">
+              <div class="sector-name">Healthcare</div>
+              <div class="sector-change change-positive">+0.8%</div>
+            </div>
+            <ul class="sector-stocks">
+              <li class="sector-stock">
+                <span>JNJ</span>
+                <span class="change-positive">+0.5%</span>
+              </li>
+              <li class="sector-stock">
+                <span>PFE</span>
+                <span class="change-positive">+1.2%</span>
+              </li>
+              <li class="sector-stock">
+                <span>UNH</span>
+                <span class="change-positive">+0.7%</span>
+              </li>
+              <li class="sector-stock">
+                <span>ABBV</span>
+                <span class="change-positive">+0.9%</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="sector-card">
+            <div class="sector-header">
+              <div class="sector-name">Finance</div>
+              <div class="sector-change change-negative">-0.3%</div>
+            </div>
+            <ul class="sector-stocks">
+              <li class="sector-stock">
+                <span>JPM</span>
+                <span class="change-negative">-0.2%</span>
+              </li>
+              <li class="sector-stock">
+                <span>BAC</span>
+                <span class="change-negative">-0.5%</span>
+              </li>
+              <li class="sector-stock">
+                <span>WFC</span>
+                <span class="change-negative">-0.3%</span>
+              </li>
+              <li class="sector-stock">
+                <span>C</span>
+                <span class="change-negative">-0.4%</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer-short">
+      <div class="container">
+        <div class="footer-short-content">
+          <div class="footer-short-logo">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M7 14l3-3 3 3 5-5v4h2V7h-6v2l3 3-3 3-3-3-3 3v2z" />
+            </svg>
+            StockMate
+          </div>
+          <div class="footer-short-links">
+            <a href="#">About</a>
+            <a href="#">Features</a>
+            <a href="#">Pricing</a>
+            <a href="#">Blog</a>
+            <a href="#">Contact</a>
+          </div>
+          <div class="footer-short-copyright">
+            © 2023 StockMate. All rights reserved.
+          </div>
+        </div>
+      </div>
+    </footer>
+    <script>
+      function goToStock(symbol) {
+        window.location.href = `stock.html?symbol=${symbol}`;
+      }
+      function addToPortfolio(symbol) {
+        const portfolio = JSON.parse(localStorage.getItem("portfolio")) || [];
+        const existing = portfolio.find((stock) => stock.symbol === symbol);
+        if (existing) {
+          existing.quantity += 1;
+        } else {
+          portfolio.push({ symbol, quantity: 1 });
+        }
+        localStorage.setItem("portfolio", JSON.stringify(portfolio));
+      }
+    </script>
+    <script src="currency.js"></script>
+    <script src="filters.js"></script>
+    <script src="pagination.js"></script>
+  </body>
+</html>

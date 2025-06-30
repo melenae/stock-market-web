@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StockMate - Your Personal Stock Market Assistant</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <div class="container">
+        <div class="header-content">
+          <div class="logo">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M7 14l3-3 3 3 5-5v4h2V7h-6v2l3 3-3 3-3-3-3 3v2z" />
+            </svg>
+            StockMate
+          </div>
+          <nav class="nav">
+            <a href="index.html" class="active">Home</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="stocks.html">Stocks</a>
+            <a href="portfolio.html">Portfolio</a>
+            <a href="news.html">News</a>
+            <a href="learn.html">Learn</a>
+          </nav>
+          <div class="search-bar">
+            <div class="search-icon">🔍</div>
+            <input
+              type="search"
+              placeholder="Search stocks..."
+              class="search-input"
+            />
+          </div>
+          <div class="header-actions">
+            <button
+              class="login-btn"
+              onclick="window.location.href='login.html'"
+            >
+              Log in
+            </button>
+            <button
+              class="signup-btn"
+              onclick="window.location.href='signup.html'"
+            >
+              Sign up
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-content">
+          <h1 class="hero-title">Your Personal Stock Market Assistant</h1>
+          <p class="hero-description">
+            Track, analyze, and optimize your investments with real-time data
+            and personalized insights.
+          </p>
+          <div class="hero-cta">
+            <button class="btn btn-primary">Get Started</button>
+            <button class="btn btn-secondary">Learn More</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Powerful Features for Smart Investing</h2>
+          <p class="section-description">
+            StockMate provides everything you need to make informed investment
+            decisions.
+          </p>
+        </div>
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">📊</div>
+            <h3 class="feature-title">Real-time Analytics</h3>
+            <p class="feature-description">
+              Get up-to-the-minute data and analytics on stocks, ETFs, and other
+              securities.
+            </p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">📈</div>
+            <h3 class="feature-title">Portfolio Tracking</h3>
+            <p class="feature-description">
+              Monitor your investments in one place with detailed performance
+              metrics.
+            </p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🔔</div>
+            <h3 class="feature-title">Smart Alerts</h3>
+            <p class="feature-description">
+              Receive notifications about price changes, news, and important
+              events.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">What Our Users Say</h2>
+          <p class="section-description">
+            Join thousands of investors who trust StockMate for their investment
+            decisions.
+          </p>
+        </div>
+        <div class="testimonials-grid">
+          <div class="testimonial-card">
+            <p class="testimonial-content">
+              "StockMate has completely transformed how I manage my investments.
+              The real-time analytics and personalized insights have helped me
+              make better decisions."
+            </p>
+            <div class="testimonial-author">
+              <div class="author-avatar">JD</div>
+              <div class="author-info">
+                <h4>John Doe</h4>
+                <p>Individual Investor</p>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <p class="testimonial-content">
+              "As a financial advisor, I recommend StockMate to all my clients.
+              The platform is intuitive, powerful, and provides all the tools
+              needed for successful investing."
+            </p>
+            <div class="testimonial-author">
+              <div class="author-avatar">JS</div>
+              <div class="author-info">
+                <h4>Jane Smith</h4>
+                <p>Financial Advisor</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+      <div class="container">
+        <h2 class="cta-title">Ready to Start Investing Smarter?</h2>
+        <p class="cta-description">
+          Join StockMate today and take control of your financial future.
+        </p>
+        <button class="btn btn-secondary">Sign Up Now</button>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <div class="footer-logo">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path d="M7 14l3-3 3 3 5-5v4h2V7h-6v2l3 3-3 3-3-3-3 3v2z" />
+              </svg>
+              StockMate
+            </div>
+            <p class="footer-description">
+              Your personal stock market assistant for smarter investing.
+            </p>
+            <div class="footer-social">
+              <a href="#">📱</a>
+              <a href="#">💬</a>
+              <a href="#">📸</a>
+              <a href="#">🐦</a>
+            </div>
+          </div>
+          <div>
+            <h3 class="footer-heading">Product</h3>
+            <ul class="footer-links">
+              <li><a href="#">Features</a></li>
+              <li><a href="#">Pricing</a></li>
+              <li><a href="#">API</a></li>
+              <li><a href="#">Integrations</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="footer-heading">Resources</h3>
+            <ul class="footer-links">
+              <li><a href="#">Documentation</a></li>
+              <li><a href="#">Guides</a></li>
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">Support</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="footer-heading">Company</h3>
+            <ul class="footer-links">
+              <li><a href="#">About</a></li>
+              <li><a href="#">Careers</a></li>
+              <li><a href="#">Contact</a></li>
+              <li><a href="#">Press</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2023 StockMate. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+    <script src="geo.js"></script>
+    <script src="currency-loader.js"></script>
+  </body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>My Portfolio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #f4f6f9;
+        margin: 0;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 1000px;
+        margin: auto;
+        background: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+      }
+
+      h1 {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 30px;
+      }
+
+      th,
+      td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #eee;
+      }
+
+      th {
+        background-color: #f0f2f5;
+      }
+
+      .positive {
+        color: green;
+      }
+
+      .negative {
+        color: red;
+      }
+
+      .summary {
+        text-align: right;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+
+      .btn-clear {
+        background: #d9534f;
+        color: #fff;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        float: right;
+      }
+
+      .btn-clear:hover {
+        background: #c9302c;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>My Portfolio</h1>
+
+      <table id="portfolio-table">
+        <thead>
+          <tr>
+            <th>Symbol</th>
+            <th>Name</th>
+            <th>Quantity</th>
+            <th>Price (USD)</th>
+            <th>Total Value</th>
+            <th>Change</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Portfolio items will be inserted here -->
+        </tbody>
+      </table>
+
+      <div class="summary">
+        Total Portfolio Value: <strong id="total-value">$0.00</strong>
+      </div>
+
+      <button class="btn-clear" onclick="clearPortfolio()">
+        Clear Portfolio
+      </button>
+    </div>
+
+    <script>
+      // Mock portfolio data from localStorage
+      const portfolio = JSON.parse(localStorage.getItem("portfolio")) || [];
+
+      const tableBody = document.querySelector("#portfolio-table tbody");
+      const totalValueEl = document.getElementById("total-value");
+
+      // Simulate real-time prices (replace with API in production)
+      const prices = {
+        AAPL: { name: "Apple Inc.", price: 185.21, change: 1.12 },
+        MSFT: { name: "Microsoft", price: 342.18, change: -0.83 },
+        NVDA: { name: "NVIDIA", price: 128.47, change: 3.45 },
+        AMZN: { name: "Amazon", price: 187.0, change: -1.72 },
+        TSLA: { name: "Tesla", price: 176.55, change: 2.91 },
+      };
+
+      let totalValue = 0;
+
+      portfolio.forEach((stock) => {
+        const priceData = prices[stock.symbol];
+        if (!priceData) return;
+
+        const totalStockValue = stock.quantity * priceData.price;
+        totalValue += totalStockValue;
+
+        const row = document.createElement("tr");
+        row.innerHTML = `
+        <td>${stock.symbol}</td>
+        <td>${priceData.name}</td>
+        <td>${stock.quantity}</td>
+        <td>$${priceData.price.toFixed(2)}</td>
+        <td>$${totalStockValue.toFixed(2)}</td>
+        <td class="${priceData.change >= 0 ? "positive" : "negative"}">
+          ${priceData.change >= 0 ? "+" : ""}${priceData.change.toFixed(2)}%
+        </td>
+      `;
+        tableBody.appendChild(row);
+      });
+
+      totalValueEl.textContent = `$${totalValue.toFixed(2)}`;
+
+      function clearPortfolio() {
+        if (confirm("Are you sure you want to clear your portfolio?")) {
+          localStorage.removeItem("portfolio");
+          location.reload();
+        }
+      }
+    </script>
+  </body>
+</html>
